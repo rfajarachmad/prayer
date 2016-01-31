@@ -1,0 +1,75 @@
+<ion-modal-view>
+<ion-header-bar>
+<button class="button icon ion-arrow-left-a" ng-click="closeModalNotification()" />
+<h1 class="title">{{prayname}} Notification</h1>
+</ion-header-bar>
+<ion-content>
+<ion-list>
+<div class="item item-divider">
+  On Prayer Time
+</div>
+<label class="item item-input item-toggle">
+  <div class="input-label">
+    Notification
+  </div>
+  <label class="toggle toggle-assertive">
+       <input type="checkbox">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+</label>
+<label class="item item-input item-select">
+  <div class="input-label">
+    Sound
+  </div>
+  <select>
+    <option ng-repeat="sound in sounds"
+    value="{{ sound.code }}">
+    {{sound.description}}
+  </option>
+</select>
+</label>
+<div class="item item-divider">
+  Before Prayer Time
+</div>
+
+<label class="item item-input item-toggle">
+  <div class="input-label">
+    Notification
+  </div>
+  <label class="toggle toggle-assertive">
+       <input type="checkbox">
+       <div class="track">
+         <div class="handle"></div>
+       </div>
+     </label>
+</label>
+
+<label class="item item-input item-select">
+  <div class="input-label">
+    Notify Before
+  </div>
+  <select >
+    <option ng-repeat="time in timeReminders"
+    value="{{ time.code }}">
+    {{time.description}}
+  </option>
+</select>
+</label>
+
+<label class="item item-input item-select">
+  <div class="input-label">
+    Sound
+  </div>
+  <select >
+    <option ng-repeat="sound in sounds"
+    value="{{ sound.code }}">
+    {{sound.description}}
+  </option>
+</select>
+</label>
+</ion-list>
+
+</ion-content>
+</ion-modal-view>

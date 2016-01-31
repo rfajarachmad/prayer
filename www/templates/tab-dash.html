@@ -1,0 +1,158 @@
+<ion-view>
+
+<ion-pane>
+  <ion-content scroll="true">
+    <section class="home-container">
+      
+      <div class = "row header">
+        <div class = "col location-info">
+          <h4 class="header-text" >{{prayer.location.address}}</h4>
+          <p class="header-text" style="margin: 0 0 3px; font-size: smaller" >{{prayer.dateinfo.masehidate}}</p>
+          <p class="header-text" style="margin: 0 0 3px; font-size: smaller">{{prayer.dateinfo.hijridate}}</p>
+          <p class="header-text" style="margin: 0 0 3px; font-size: smaller">{{prayer.dateinfo.currenttimestring}}</p>
+        </div>
+        <div class = "col pray-info">
+            <div class = "row">
+              <div class = "col text-right">
+                <a class="button button-icon icon ion-ios-location" ng-click="openModalLocation()"></a>
+              </div>
+            </div>
+            <div class = "row">
+              <div class = "col text-right">
+                <p class="header-text" style="margin: 0 0 3px;">{{prayer.prayinfo.nextpray}} is in</p>
+                <h3 class="header-text" style="margin-top: 10px">{{hrsmin}}<sup> {{sec}}</sup></h3>
+              </div>
+            </div>
+        </div>
+      </div>
+
+       
+
+      <div class="row content">
+         
+          <div class="col">
+          
+          <div class="row">
+
+            <div class="col">
+              <button class="pray-item-left" ng-click="openModalNotification('Imsak')">
+                <div class = "row">
+                  <div class = "col  text-center pray-item-text">
+                    <p>Imsak</p>
+                    <h6>{{prayer.praytime.imsak.time}}</h6>
+                  </div>                
+                </div>
+                <div class="row">
+                  <div class = "col pray-item-icon">
+                    <i class="icon ion-android-volume-up"></i>
+                    <i class="icon ion-ios-alarm-outline"></i>
+                  </div>
+                </div>
+              </button>
+            </div>
+            
+            <div class="col">
+              <button class="pray-item-left" ng-click="openModalNotification('Fajr')">
+                <div class = "row">
+                  <div class = "col  text-center pray-item-text">
+                    <p>Fajr</p>
+                    <h6>{{prayer.praytime.fajr.time}}</h6>
+                  </div>                
+                </div>
+                <div class="row">
+                  <div class = "col pray-item-icon">
+                    <i class="icon ion-android-volume-up"></i>
+                    <i class="icon ion-ios-alarm-outline"></i>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="col">
+              <button class="pray-item-left" ng-click="openModalNotification('Dhuhr')">
+                <div class = "row">
+                  <div class = "col  text-center pray-item-text">
+                    <p>Dhuhr</p>
+                    <h6>{{prayer.praytime.dhuhr.time}}</h6>
+                  </div>                
+                </div>
+                <div class="row">
+                  <div class = "col pray-item-icon">
+                    <i class="icon ion-android-volume-up"></i>
+                    <i class="icon ion-ios-alarm-outline"></i>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+
+          </div>
+
+          <div class="row">
+            
+            
+            
+            <div class="col">
+              <button class="pray-item-left" ng-click="openModalNotification('Asr')">
+                <div class = "row">
+                  <div class = "col  text-center pray-item-text">
+                    <p>Asr</p>
+                    <h6>{{prayer.praytime.asr.time}}</h6>
+                  </div>                
+                </div>
+                <div class="row">
+                  <div class = "col pray-item-icon">
+                    <i class="icon ion-android-volume-up"></i>
+                    <i class="icon ion-ios-alarm-outline"></i>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="col">
+              <button class="pray-item-left" ng-click="openModalNotification('Maghrib')">
+                <div class = "row">
+                  <div class = "col  text-center pray-item-text">
+                    <p>Maghrib</p>
+                    <h6>{{prayer.praytime.maghrib.time}}</h6>
+                  </div>                
+                </div>
+                <div class="row">
+                  <div class = "col pray-item-icon">
+                    <i class="icon ion-android-volume-up"></i>
+                    <i class="icon ion-ios-alarm-outline"></i>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div class="col">
+              <button class="pray-item-left" ng-click="openModalNotification('Isha')">
+                <div class = "row">
+                  <div class = "col  text-center pray-item-text">
+                    <p>Isha</p>
+                    <h6>{{prayer.praytime.isha.time}}</h6>
+                  </div>                
+                </div>
+                <div class="row">
+                  <div class = "col pray-item-icon">
+                    <i class="icon ion-android-volume-up"></i>
+                    <i class="icon ion-ios-alarm-outline"></i>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- </ion-content> -->
+        
+      </div>
+
+    </section>
+</ion-content>
+</ion-pane>
+
+</ion-view>

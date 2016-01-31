@@ -1,0 +1,33 @@
+<ion-view view-title="Settings">
+<ion-content>
+<ion-list>
+<div class="item item-divider">
+	Calculation Settings
+</div>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Calculation Method
+	</div>
+	<select ng-model="settings.method" ng-change="changedValue()">
+		<option ng-repeat="method in methods"
+		ng-selected="{{ settings.method == method.code }}"
+		value="{{ method.code }}">
+		{{method.description}}
+	</option>
+</select>
+</label>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Asr Calculation
+	</div>
+	<select ng-model="settings.asrmethod" ng-change="changedValue()">
+		<option ng-repeat="method in asrmethods"
+		ng-selected="{{ settings.asrmethod == method.code }}"
+		value="{{ method.code }}">
+		{{method.description}}
+	</option>
+</select>
+</label>
+</ion-list>
+</ion-content>
+</ion-view>
