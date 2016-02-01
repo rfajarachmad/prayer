@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($ionicLoading, $rootScope, $log, $scope, $interval,$ionicSlideBoxDelegate,$ionicModal, GeoLocation, Configuration, Lookup) {
+.controller('PrayTimeCtrl', function($ionicLoading, $rootScope, $log, $scope, $interval, $ionicModal, GeoLocation, Configuration, Lookup) {
   
   //var geocoder = new google.maps.Geocoder();
   
@@ -372,7 +372,7 @@ $scope.remove = function(chat) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, $rootScope, $log, Configuration, Lookup) {
+.controller('SettingsCtrl', function($scope, $rootScope, $log, Configuration, Lookup) {
   
   var prayer = Configuration.getPrayer();
 
