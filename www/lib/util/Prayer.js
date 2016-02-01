@@ -22,69 +22,69 @@ function Prayer() {
     };
     this.praytime = {
       imsak: {
-        name:"", 
+        name:"Imsak", 
         time:"",
         notification: {
-          beforepray:"",
-          beforepraytime:"",
-          beforepraysound:"",
-          onpray:"",
-          onpraysound:""
+          beforepray: false,
+          beforepraytime:"10",
+          beforepraysound:"Adzan",
+          onpray: false,
+          onpraysound:"Adzan"
         }
       },
       fajr: {
-        name:"", 
+        name:"Fajr", 
         time:"",
         notification: {
-          beforepray:"",
-          beforepraytime:"",
-          beforepraysound:"",
-          onpray:"",
-          onpraysound:""
+          beforepray: false,
+          beforepraytime:"10",
+          beforepraysound:"Adzan",
+          onpray: false,
+          onpraysound:"Adzan"
         }
       },
       dhuhr: {
-        name:"", 
+        name:"Dhuhr", 
         time:"",
         notification: {
-          beforepray:"",
-          beforepraytime:"",
-          beforepraysound:"",
-          onpray:"",
-          onpraysound:""
+          beforepray: false,
+          beforepraytime:"10",
+          beforepraysound:"Adzan",
+          onpray: false,
+          onpraysound:"Adzan"
         }
       },
       asr: {
-        name:"", 
+        name:"Asr", 
         time:"",
         notification: {
-          beforepray:"",
-          beforepraytime:"",
-          beforepraysound:"",
-          onpray:"",
-          onpraysound:""
+          beforepray: false,
+          beforepraytime:"10",
+          beforepraysound:"Adzan",
+          onpray: false,
+          onpraysound:"Adzan"
         }
       },
       maghrib: {
-        name:"", 
+        name:"Maghrib", 
         time:"",
         notification: {
-          beforepray:"",
-          beforepraytime:"",
-          beforepraysound:"",
-          onpray:"",
-          onpraysound:""
+          beforepray: false,
+          beforepraytime:"10",
+          beforepraysound:"Adzan",
+          onpray: false,
+          onpraysound:"Adzan"
         }
       },
       isha: {
-        name:"", 
+        name:"Isha", 
         time:"",
         notification: {
-          beforepray:"",
-          beforepraytime:"",
-          beforepraysound:"",
-          onpray:"",
-          onpraysound:""
+          beforepray: false,
+          beforepraytime:"10",
+          beforepraysound:"Adzan",
+          onpray: false,
+          onpraysound:"Adzan"
         }
       }
     };

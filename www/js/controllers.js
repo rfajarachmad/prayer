@@ -108,8 +108,67 @@ angular.module('starter.controllers', [])
     $scope.prayname = prayname;
     $scope.sounds = Lookup.getSounds();
     $scope.timeReminders = Lookup.getTimeRemainders();
+    prayer = Configuration.getPrayer();
+    switch (prayname) {
+      case 'Imsak':
+        $scope.notification = prayer.praytime.imsak.notification;
+        $log.debug("Opening modal for imsak", prayer.praytime.imsak.notification);
+        break;
+      case 'Fajr':
+        $scope.notification = prayer.praytime.fajr.notification;
+        $log.debug("Opening modal for fajr", prayer.praytime.fajr.notification);
+        break;
+      case 'Dhuhr':
+        $scope.notification = prayer.praytime.dhuhr.notification;
+        $log.debug("Opening modal for dhuhr", prayer.praytime.dhuhr.notification);
+        break;
+      case 'Asr':
+        $scope.notification = prayer.praytime.asr.notification;
+        $log.debug("Opening modal for asr", prayer.praytime.asr.notification);
+        break;
+      case 'Maghrib':
+        $scope.notification = prayer.praytime.maghrib.notification;
+        $log.debug("Opening modal for maghrib", prayer.praytime.maghrib.notification);
+        break;
+      case 'Isha':
+        $scope.notification = prayer.praytime.isha.notification;
+        $log.debug("Opening modal for isha", prayer.praytime.isha.notification);
+        break;
+    }
+
     $scope.modalnotification.show();
   };
+
+
+  $scope.notificationChanged = function(prayname) {
+    $log.debug("notificationChanged-prayname", prayname);
+    $log.debug("notificationChanged", $scope.notification);
+    prayer = Configuration.getPrayer();
+
+    switch (prayname) {
+      case 'Imsak':    
+        prayer.praytime.imsak.notification = $scope.notification;    
+        break;
+      case 'Fajr':    
+        prayer.praytime.fajr.notification = $scope.notification;
+        break;
+      case 'Dhuhr':    
+        prayer.praytime.dhuhr.notification = $scope.notification;
+        break;
+      case 'Asr':    
+        prayer.praytime.asr.notification = $scope.notification;
+        break;
+      case 'Maghrib':    
+        prayer.praytime.maghrib.notification = $scope.notification;
+        break;
+      case 'Isha':    
+        prayer.praytime.isha.notification = $scope.notification;
+        break;
+    }
+
+    Configuration.setPrayer(prayer); 
+    $log.debug("Saving prayer", prayer);
+  }
 
   $scope.closeModalNotification = function() {
     $scope.modalnotification.hide();

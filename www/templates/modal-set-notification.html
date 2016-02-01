@@ -13,7 +13,7 @@
     Notification
   </div>
   <label class="toggle toggle-assertive">
-       <input type="checkbox">
+       <input ng-model="notification.onpray" ng-change="notificationChanged(prayname)" type="checkbox">
        <div class="track">
          <div class="handle"></div>
        </div>
@@ -23,9 +23,10 @@
   <div class="input-label">
     Sound
   </div>
-  <select>
+  <select ng-model="notification.onpraysound" ng-disabled="!notification.onpray" ng-change="notificationChanged(prayname)">
     <option ng-repeat="sound in sounds"
-    value="{{ sound.code }}">
+    value="{{ sound.code }}"
+    ng-selected="{{ notification.onpraysound == sound.code }}">
     {{sound.description}}
   </option>
 </select>
@@ -39,7 +40,7 @@
     Notification
   </div>
   <label class="toggle toggle-assertive">
-       <input type="checkbox">
+       <input type="checkbox" ng-model="notification.beforepray" ng-change="notificationChanged(prayname)">
        <div class="track">
          <div class="handle"></div>
        </div>
@@ -50,9 +51,10 @@
   <div class="input-label">
     Notify Before
   </div>
-  <select >
+  <select ng-change="notificationChanged(prayname)" ng-disabled="!notification.beforepray" ng-model="notification.beforepraytime">
     <option ng-repeat="time in timeReminders"
-    value="{{ time.code }}">
+    value="{{ time.code }}"
+    ng-selected="{{ notification.beforepraytime == time.code }}">
     {{time.description}}
   </option>
 </select>
@@ -62,9 +64,10 @@
   <div class="input-label">
     Sound
   </div>
-  <select >
+  <select ng-change="notificationChanged(prayname)" ng-disabled = "!notification.beforepray"  ng-model="notification.beforepraysound">
     <option ng-repeat="sound in sounds"
-    value="{{ sound.code }}">
+    value="{{ sound.code }}"
+    ng-selected="{{ notification.beforepraysound == sound.code }}">
     {{sound.description}}
   </option>
 </select>
