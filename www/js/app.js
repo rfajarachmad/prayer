@@ -31,6 +31,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $ionicConfigProvider.tabs.position('bottom');
+  $ionicConfigProvider.backButton.previousTitleText(false);
   $stateProvider
 
   // setup an abstract state for the tabs directive
@@ -57,6 +58,16 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
     views: {
       'tab-settings': {
         templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl'
+      }
+    }
+  })
+
+  .state('tab.settings-adjustment', {
+    url: '/settings/adjustment',
+    views: {
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings-adjustment.html',
         controller: 'SettingsCtrl'
       }
     }
