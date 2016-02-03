@@ -26,8 +26,21 @@ function PrayerUtil(prayer) {
 	this.calculate= function() {
 
 	    prayTimes.setMethod(this.prayer.setting.method);
-	    var adjustment = {asr: this.prayer.setting.asrmethod}
+	    var adjustment = {
+	    		asr: this.prayer.setting.asrmethod
+	    	}
+	    console.log("adjustment", adjustment);
 	    prayTimes.adjust(adjustment);
+
+	    var tune = {
+	    	fajr: parseInt(this.prayer.setting.adjustment.fajr),
+	    	dhuhr: parseInt(this.prayer.setting.adjustment.dhuhr),
+	    	asr: parseInt(this.prayer.setting.adjustment.asr),
+	    	maghrib: parseInt(this.prayer.setting.adjustment.maghrib),
+	    	isha: parseInt(this.prayer.setting.adjustment.isha)
+	    };
+	    console.log("tune", tune);
+	    prayTimes.tune(tune);
 
 	    var praytime = prayTimes.getTimes(this.prayer.today, [this.prayer.location.latitude, this.prayer.location.longitude], this.prayer.location.timezone);
 	    

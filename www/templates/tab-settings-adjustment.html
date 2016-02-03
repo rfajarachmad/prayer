@@ -4,7 +4,7 @@
 <ion-nav-back-button class="button-clear">
   </ion-nav-back-button>
   <ion-nav-buttons side="primary">
-      <button class="button">
+      <button class="button" ng-click="resetAdjustment()">
       	Reset
       </button>
     </ion-nav-buttons>
@@ -16,36 +16,36 @@
     <div class="input-label">
     Fajr
   </div>
-    <input type="range" name="fajr" min="-60" max="60" value="0">
-    0 min
+    <input type="range" name="fajr" ng-change="changedValue()" ng-model="settings.adjustment.fajr" min="-60" max="60" value="{{settings.adjustment.fajr}}">
+    {{settings.adjustment.fajr}} min
   </div>
   <div class="item range range-positive">
     <div class="input-label">
     Dhuhr
   </div>
-    <input type="range" name="dhuhr" min="-60" max="60" value="0">
-    0 min
+    <input type="range" name="dhuhr" ng-change="changedValue()" ng-model="settings.adjustment.dhuhr" min="-60" max="60" value="{{settings.adjustment.dhuhr}}">
+    {{settings.adjustment.dhuhr}} min
   </div>
   <div class="item range range-positive">
     <div class="input-label">
     Asr
   </div>
-    <input type="range" name="asr" min="-60" max="60" value="0">
-    0 min
+    <input type="range" name="asr" ng-change="changedValue()" ng-model="settings.adjustment.asr" min="-60" max="60" value="{{settings.adjustment.asr}}">
+    {{settings.adjustment.asr}} min
   </div>
   <div class="item range range-positive">
     <div class="input-label">
     Maghrib
   </div>
-    <input type="range" name="maghrib" min="-60" max="60" value="0">
-    0 min
+    <input type="range" name="maghrib" ng-change="changedValue()" ng-model="settings.adjustment.maghrib" min="-60" max="60" value="{{settings.adjustment.maghrib}}">
+    {{settings.adjustment.maghrib}} min
   </div>
   <div class="item range range-positive">
     <div class="input-label">
     Isha
   </div>
-    <input type="range" name="isha" min="-60" max="60" value="0">
-    0 min
+    <input type="range" name="isha" ng-change="changedValue()" ng-model="settings.adjustment.isha" min="-60" max="60" value="{{settings.adjustment.isha}}">
+    {{settings.adjustment.isha}} min
   </div>
 </ion-list>
 </ion-content>

@@ -97,7 +97,14 @@ function Prayer() {
     };
     this.setting = {
     	mthod:"",
-    	asrmethod:""
+    	asrmethod:"",
+      adjustment: {
+        fajr: 0,
+        dhuhr: 0,
+        asr: 0,
+        maghrib: 0,
+        isha: 0
+      }
     }
 
 }
