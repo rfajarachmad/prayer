@@ -24,7 +24,7 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $logProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -32,6 +32,8 @@ angular.module('starter', ['ionic','ngCordova', 'starter.controllers', 'starter.
   // Each state's controller can be found in controllers.js
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.backButton.previousTitleText(false);
+  $logProvider.debugEnabled(false);
+
   $stateProvider
 
   // setup an abstract state for the tabs directive

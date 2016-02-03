@@ -1,11 +1,25 @@
 <ion-view view-title="Settings">
-<ion-view view-title="Manual Adjustment">
 <ion-nav-bar animation="nav-title-slide-ios7" 
              type="bar-positive">
 <ion-nav-back-button class="button-clear">
   </ion-nav-back-button>
 <ion-content>
 <ion-list>
+<div class="item item-divider">
+	General
+</div>
+<label class="item item-input item-select">
+	<div class="input-label">
+		Language
+	</div>
+	<select ng-model="settings.language" ng-change="changedValue()">
+		<option ng-repeat="lang in languages"
+		ng-selected="{{ settings.language == lang.code }}"
+		value="{{ lang.code }}">
+		{{lang.description}}
+	</option>
+</select>
+</label>
 <div class="item item-divider">
 	Calculation Settings
 </div>

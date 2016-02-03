@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view view-title="PrayTime">
 
 <ion-pane>
   <ion-content scroll="true">
@@ -6,7 +6,8 @@
       
       <div class = "row header">
         <div class = "col location-info">
-          <h4 class="header-text" >{{prayer.location.address}}</h4>
+          <ion-spinner icon="lines" ng-show="!prayer.locationsolved"></ion-spinner>
+          <h4 class="header-text" ng-show="prayer.locationsolved">{{prayer.location.address}}</h4>
           <p class="header-text" style="margin: 0 0 3px; font-size: smaller" >{{prayer.dateinfo.masehidate}}</p>
           <p class="header-text" style="margin: 0 0 3px; font-size: smaller">{{prayer.dateinfo.hijridate}}</p>
           <p class="header-text" style="margin: 0 0 3px; font-size: smaller">{{prayer.dateinfo.currenttimestring}}</p>
@@ -81,7 +82,7 @@
                 <div class="row">
                   <div class = "col pray-item-icon">
                     <i class="icon ion-android-volume-up" ng-show="prayer.praytime.dhuhr.notification.onpray"></i>
-                    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.fajr.notification.onpray"></i>
+                    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.dhuhr.notification.onpray"></i>
                     <i class="icon ion-ios-alarm-outline" ng-show="prayer.praytime.dhuhr.notification.beforepray"></i>
                   </div>
                 </div>

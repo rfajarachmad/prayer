@@ -4,14 +4,15 @@ function Prayer() {
 	this.tomorrow = new Date(this.today.getTime() + 24 * 60 * 60 * 1000);
   	this.yesterday = new Date(this.today.getTime() - 24 * 60 * 60 * 1000);
   	this.newposition = {};
+    this.locationsolved = true;
   	this.query = "";
     this.location = {
-      latitude: 0,
-      longitude: 0,
-      district: "",
-      country: "",
-      address: "",
-      timezone: 0,
+      latitude: -6.2087634,
+      longitude: 106.84559899999999,
+      district: "South Jakarta",
+      country: "Indonesia",
+      address: "South Jakarta, Indonesia",
+      timezone: 7,
       localdate: undefined,
       rawoffset: 25200
     };
@@ -96,8 +97,9 @@ function Prayer() {
       nextpraydatetime: ""
     };
     this.setting = {
-    	mthod:"",
-    	asrmethod:"",
+    	method:"MWL",
+    	asrmethod:"Standard",
+      language:"EN",
       adjustment: {
         fajr: 0,
         dhuhr: 0,
