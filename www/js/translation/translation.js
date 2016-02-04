@@ -28,7 +28,7 @@ var translations = {
 		"settings_general": "Umum",
 		"settings_language": "Bahasa",
 		"settings_calculation_setting": "Perhitungan",
-		"settings_calculation_method": "Metoda",
+		"settings_calculation_method": "Metode Perhitungan",
 		"settings_asr_calculation": "Perhitungan Asar",
 		"settings_manual_adjustment": "Penyesuaian Manual",
 		"imsak": "Imsak",

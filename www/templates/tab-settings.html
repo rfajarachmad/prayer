@@ -3,53 +3,38 @@
              type="bar-positive">
 <ion-nav-back-button class="button-clear">
   </ion-nav-back-button>
-<ion-content>
-<ion-list>
-<div class="item item-divider">
-	{{"settings_general" | translate}}
+<ion-content scrol="true">
+
+<div class="list">
+
+	<div class="item item-divider">
+		{{"settings_general" | translate}}
+	</div>
+
+	<a class="item item-icon-left" href="#" ng-click="showList('LANG')">
+    	<i class="icon ion-android-globe"></i>
+	    {{"settings_language" | translate}}
+  	</a>
+
+  	<div class="item item-divider">
+		{{"settings_calculation_setting" | translate}}
+	</div>
+
+	<a class="item item-icon-left" href="#" ng-click="showList('CM')">
+    	<i class="icon ion-lightbulb"></i>
+	    {{"settings_calculation_method" | translate}}
+  	</a>
+
+  	<a class="item item-icon-left" href="#" ng-click="showList('AC')">
+    	<i class="icon ion-lightbulb"></i>
+	    {{"settings_asr_calculation" | translate}}
+  	</a>
+
+  	<a class="item item-icon-left" href="#/tab/settings/adjustment">
+    	<i class="icon ion-wand"></i>
+		{{"settings_manual_adjustment" | translate}}
+  	</a>
+
 </div>
-<label class="item item-input item-select">
-	<div class="input-label">
-		{{"settings_language" | translate}}
-	</div>
-	<select ng-model="settings.language" ng-change="changedLanguage()">
-		<option ng-repeat="lang in languages"
-		ng-selected="{{ settings.language == lang.code }}"
-		value="{{ lang.code }}">
-		{{lang.description}}
-	</option>
-</select>
-</label>
-<div class="item item-divider">
-	{{"settings_calculation_setting" | translate}}
-</div>
-<label class="item item-input item-select">
-	<div class="input-label">
-		{{"settings_calculation_method" | translate}}
-	</div>
-	<select ng-model="settings.method" ng-change="changedValue()">
-		<option ng-repeat="method in methods"
-		ng-selected="{{ settings.method == method.code }}"
-		value="{{ method.code }}">
-		{{method.description}}
-	</option>
-</select>
-</label>
-<label class="item item-input item-select">
-	<div class="input-label">
-		{{"settings_asr_calculation" | translate}}
-	</div>
-	<select ng-model="settings.asrmethod" ng-change="changedValue()">
-		<option ng-repeat="method in asrmethods"
-		ng-selected="{{ settings.asrmethod == method.code }}"
-		value="{{ method.code }}">
-		{{method.description}}
-	</option>
-</select>
-</label>
-<a class="item" href="#/tab/settings/adjustment">
-	{{"settings_manual_adjustment" | translate}}
-</a>
-</ion-list>
 </ion-content>
 </ion-view>

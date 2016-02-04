@@ -383,6 +383,7 @@ angular.module('starter.controllers', [])
   var prayer = Configuration.getPrayer();
   var newposition = {};
   var query = "";
+
   $log.debug("initializing prayer", prayer);
 
   prayer.locationsolved = false;
@@ -400,19 +401,61 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, $rootScope, $log, $translate, Configuration, Lookup) {
+.controller('SettingsCtrl', function($scope, $rootScope, $log, $translate, $ionicPopup, Configuration, Lookup) {
   
   var prayer = Configuration.getPrayer();
+  var selectedItem = undefined;
 
-  $scope.changedValue = function() {
-    prayer = Configuration.getPrayer();
-    prayer.setting = $scope.settings;
-    $log.debug("Saving prayer", prayer);
-    Configuration.setPrayer(prayer);
-    $rootScope.$broadcast('calculatePrayerTime');
-  }
+  $scope.showList = function(mode){
+   var items = [];
+   var model = "";
+   var title = "";
 
-  $scope.changedLanguage = function() {
+   switch (mode) {
+    case 'LANG' :
+      items = Lookup.getLanguages();
+      model = "settings.language";
+      title = "Choose a language :";
+      break;
+
+    case 'CM' :
+      items = Lookup.getMethods();
+      model = "settings.method";
+      title = "Choose calculation method :";
+      break;
+
+    case 'AC' :
+      items = Lookup.getAsrMethods();
+      model = "settings.asrmethod";
+      title = "Choose Asr method :";
+      break;
+   }
+   
+   $scope.items = items;
+   showListPopup(title, model);
+ } 
+
+ showListPopup = function(title, model) {
+  var listPopup = $ionicPopup.show({
+     template: '<ion-list class="item-text-wrap"> <ion-radio class ng-repeat="item in items" ng-model="'+model+'" ng-value="item.code">{{item.description}} </ion-radio> </ion-list>',
+     title: title,
+     scope: $scope,
+     buttons: [
+       { text: 'Cancel' },
+       { text: '<b>Ok</b>',
+         type: 'button-balanced',
+         onTap: function(e) {
+            $log.debug("selectedItem",$scope.settings);
+            changedSettings();
+            return $scope.settings;
+         }
+        }
+     ]
+   });
+ }
+
+
+  changedSettings = function() {
     prayer = Configuration.getPrayer();
     prayer.setting = $scope.settings;
 
@@ -425,7 +468,4 @@ angular.module('starter.controllers', [])
   }
 
   $scope.settings = prayer.setting;
-  $scope.methods = Lookup.getMethods();
-  $scope.asrmethods = Lookup.getAsrMethods();
-  $scope.languages = Lookup.getLanguages();
 });

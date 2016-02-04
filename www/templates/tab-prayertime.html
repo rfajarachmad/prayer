@@ -1,6 +1,6 @@
 <ion-view view-title="PrayTime">
 
-<ion-pane>
+<!-- <ion-pane>
   <ion-content scroll="true">
     <section class="home-container">
       
@@ -154,12 +154,83 @@
 
         </div>
 
-        <!-- </ion-content> -->
         
       </div>
 
     </section>
 </ion-content>
-</ion-pane>
+</ion-pane> -->
+<ion-content scroll="true">
+<div class="list card">
 
+  <a class="item  item-icon-left item-balanced" ng-click="openModalLocation()" href="#">
+    <i class="icon ion-ios-location"></i>
+    <h2 class="header-text">{{prayer.location.address}}</h2>
+    <h4 class="header-text">{{prayer.dateinfo.masehidate}}</h4>
+    <h4 class="header-text">{{prayer.dateinfo.hijridate}}</h4>
+    <h4 class="header-text">{{prayer.dateinfo.currenttimestring}}</h4>
+  </a>
+
+  
+  <div class="item text-center item-icon-left">
+    <i class="icon ion-ios-stopwatch-outline"></i>
+    <p>{{prayer.prayinfo.nextpray}} is in</p>
+    <h1>{{hrsmin}}<sup> {{sec}}</sup></h1>
+  </div>
+
+  <a class="item item-icon-left" href="#" ng-click="openModalNotification('Imsak')">
+    <i class="icon ion-android-volume-up" ng-show="prayer.praytime.imsak.notification.onpray"></i>
+    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.imsak.notification.onpray"></i>
+    {{"imsak" | translate}}
+    <span class="item-note">
+      {{prayer.praytime.imsak.time}}
+    </span>
+  </a>
+
+  <a class="item item-icon-left" href="#" ng-click="openModalNotification('Fajr')">
+    <i class="icon ion-android-volume-up" ng-show="prayer.praytime.fajr.notification.onpray"></i>
+    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.fajr.notification.onpray"></i>
+    {{"fajr" | translate}}
+    <span class="item-note">
+      {{prayer.praytime.fajr.time}}
+    </span>
+  </a>
+
+  <a class="item item-icon-left" href="#" ng-click="openModalNotification('Dhuhr')">
+    <i class="icon ion-android-volume-up" ng-show="prayer.praytime.dhuhr.notification.onpray"></i>
+    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.dhuhr.notification.onpray"></i>
+    {{"dhuhr" | translate}}
+    <span class="item-note">
+      {{prayer.praytime.dhuhr.time}}
+    </span>
+  </a>
+
+  <a class="item item-icon-left" href="#" ng-click="openModalNotification('Asr')">
+    <i class="icon ion-android-volume-up" ng-show="prayer.praytime.asr.notification.onpray"></i>
+    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.asr.notification.onpray"></i>
+    {{"asr" | translate}}
+    <span class="item-note">
+      {{prayer.praytime.asr.time}}
+    </span>
+  </a>
+
+  <a class="item item-icon-left" href="#" ng-click="openModalNotification('Maghrib')">
+    <i class="icon ion-android-volume-up" ng-show="prayer.praytime.maghrib.notification.onpray"></i>
+    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.maghrib.notification.onpray"></i>
+    {{"maghrib" | translate}}
+    <span class="item-note">
+      {{prayer.praytime.maghrib.time}}
+    </span>
+  </a>
+
+  <a class="item item-icon-left" href="#" ng-click="openModalNotification('Isha')">
+    <i class="icon ion-android-volume-up" ng-show="prayer.praytime.isha.notification.onpray"></i>
+    <i class="icon ion-android-volume-off" ng-show="!prayer.praytime.isha.notification.onpray"></i>
+    {{"isha" | translate}}
+    <span class="item-note">
+      {{prayer.praytime.isha.time}}
+    </span>
+  </a>
+</div>
+</ion-content>
 </ion-view>
