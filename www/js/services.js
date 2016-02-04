@@ -31,9 +31,9 @@ angular.module('starter.services', [])
     return q.promise;
   }
 
-  self.getGeoInformation = function(latitude, longitude) {
+  self.getGeoInformation = function(latitude, longitude, lang) {
     var q = $q.defer();
-    $http.get(GOOGLE_API+'latlng='+latitude+','+longitude+'&sensor=true&key='+API_KEY).then(function(result){
+    $http.get(GOOGLE_API+'latlng='+latitude+','+longitude+'&language='+lang+'&sensor=true&key='+API_KEY).then(function(result){
       $log.debug("GeoLocation.getGeoInformation by latitude: and longitude:", result);
       q.resolve(result);
     }, function(err) {
@@ -43,9 +43,9 @@ angular.module('starter.services', [])
     return q.promise;
   }
 
-  self.getLocationByName = function(address) {
+  self.getLocationByName = function(address, lang) {
    var q = $q.defer();
-    $http.get(GOOGLE_API+'address='+address).then(function(result){
+    $http.get(GOOGLE_API+'address='+address+'&language='+lang).then(function(result){
       $log.debug("GeoLocation.getLocationByName:", result);
       q.resolve(result);
     }, function(err) {
@@ -58,7 +58,7 @@ angular.module('starter.services', [])
   return self;
 })
 
-.factory('Lookup', function(){
+.factory('Lookup', function($translate){
 
   var methods = [
     {code:'MWL', description:'Muslim World League', default:true},
@@ -73,29 +73,6 @@ angular.module('starter.services', [])
   var asrMethods = [
     {code:'Standard', description:'Shafii, Maliki, Jafari and Hanbali', default:true},
     {code:'Hanafi', description:'Hanafi', default:false},
-  ];
-
-  var hijrimonths = [
-    'Muharam',
-    'Safar',
-    'Rabi Al-Awwal',
-    'Rabi Al-Thani',
-    'Jumada Al-Awwal',
-    'Jumada Al-Thani',
-    'Rajab',
-    'Shaban',
-    'Ramadhan',
-    'Shawwal',
-    'Dhul Qaidah',
-    'Dhul Hijjah'
-  ];
-  
-  var praynames = [
-    'Fajr',
-    'Dhuhr',
-    'Asr',
-    'Maghrib',
-    'Isha'
   ];
 
   var sounds = [
@@ -119,12 +96,12 @@ angular.module('starter.services', [])
       return methods;
     },
 
-    getHijriMonths: function() {
-      return hijrimonths;
+    getHijriMonths: function(lang) {
+      return translations[lang].hijrimonths;
     },
 
-    getPrayNames: function() {
-      return praynames;
+    getPrayNames: function(lang) {
+      return translations[lang].praynames;;
     },
     getAsrMethods: function() {
       return asrMethods;
@@ -250,7 +227,7 @@ angular.module('starter.services', [])
 
       $log.debug("> Times", times);
 
-      var praynames = Lookup.getPrayNames();
+      var praynames = Lookup.getPrayNames(prayer.setting.language);
       var today = new Date(prayer.today);
       var tomorrow = new Date(prayer.tomorrow);
       var yesterday = new Date(prayer.yesterday);
@@ -320,14 +297,14 @@ angular.module('starter.services', [])
     }
 
   var hijridate = function(prayer) {
-      var hijrimonths = Lookup.getHijriMonths();
+      var hijrimonths = Lookup.getHijriMonths(prayer.setting.language);
       var hijriCal = new UQCal(prayer.today).convert();
       var hijrimonth = hijriCal.Hmonth - 1;
       var hijridate = hijriCal.Hday+" "+hijrimonths[hijrimonth]+" "+hijriCal.Hyear;
 
       $log.debug("Getting dateinfo");
 
-      prayer.dateinfo.masehidate = dateutil.format(new Date(prayer.today), 'l d F Y');
+      prayer.dateinfo.masehidate = dateutil.format(new Date(prayer.today), 'l d F Y', prayer.setting.language.toLowerCase());
       prayer.dateinfo.hijridate = hijriCal.Hday+" "+hijrimonths[hijrimonth]+" "+hijriCal.Hyear;
       
       $log.debug("Date info result", prayer.dateinfo);      

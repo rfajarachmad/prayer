@@ -1,0 +1,50 @@
+var translations = {
+	"EN": {
+		"settings_title": "Settings",
+		"settings_general": "General",
+		"settings_language": "Language",
+		"settings_calculation_setting": "Calculation Setting",
+		"settings_calculation_method": "Calculation Method",
+		"settings_asr_calculation": "Asr Calculation",
+		"settings_manual_adjustment": "Manual Adjustment",
+		"imsak": "Imsak",
+		"fajr": "Fajr",
+		"dhuhr": "Dhuhr",
+		"asr": "Asr",
+		"maghrib": "Maghrib",
+		"isha": "Isha",
+		"notification": "Notification",
+		"sound": "Sound",
+		"notify_before": "Notify before",
+		"on_prayer_time": "On prayer time",
+		"before_prayer_time": "Before prayer time",
+		"praynames": ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"],
+		"hijrimonths": ["Muharam", 'Safar', 'Rabi Al-Awwal', 'Rabi Al-Thani', 'Jumada Al-Awwal', 'Jumada Al-Thani', 'Rajab', 'Shaban', 'Ramadhan', 'Shawwal', 'Dhul Qaidah', 'Dhul Hijjah'],
+		"masehimonths": {'January': 'January', 'February' : 'February', 'March': 'March', 'April': 'April', 'May' : 'May', 'June' : 'June', 'July' : 'July', 'August' : 'August', 'September' : 'September', 'October' :'October', 'November':'November', 'December':'December','Sunday': 'Sunday', 'Monday' : 'Monday', 'Tuesday' : 'Tuesday', 'Wednesday': 'Wednesday', 'Thursday': 'Thursday', 'Friday': 'Friday', 'Saturday':'Saturday'}
+
+	},
+	"ID": {
+		"settings_title": "Pengaturan",
+		"settings_general": "Umum",
+		"settings_language": "Bahasa",
+		"settings_calculation_setting": "Perhitungan",
+		"settings_calculation_method": "Metoda",
+		"settings_asr_calculation": "Perhitungan Asar",
+		"settings_manual_adjustment": "Penyesuaian Manual",
+		"imsak": "Imsak",
+		"fajr": "Subuh",
+		"dhuhr": "Duhur",
+		"asr": "Asar",
+		"maghrib": "Maghrib",
+		"isha": "Isya",
+		"notification": "Notifikasi",
+		"sound": "Alarm",
+		"notify_before": "Ingatkan sebelum",
+		"on_prayer_time": "Saat waktu shalat",
+		"before_prayer_time": "Sebelum waktu shalat",
+		"praynames": ["Subuh", "Duhur", "Asar", "Maghrib", "Isya"],
+		"hijrimonths": ["Muharram", 'Safar', 'Rabiul Awal', 'Rabiul Akhir', 'Jumadil Awal', 'Jumadil Akhir', 'Rajab', 'Syaban', 'Ramadhan', 'Syawal', 'Dzulkaidah', 'Dzulhijjah'],
+		"masehimonths": {'January': 'Januari', 'February' : 'Februari', 'March': 'Maret', 'April': 'April', 'May' : 'Mei', 'June' : 'Juni', 'July' : 'Juli', 'August' : 'Agustus', 'September' : 'September', 'October' :'Oktober', 'November':'Nopember', 'December':'Desember','Sunday': 'Minggu', 'Monday' : 'Senin', 'Tuesday' : 'Selasa', 'Wednesday': 'Rabu', 'Thursday': 'Kamis', 'Friday': 'Jumat', 'Saturday':'Sabtu'}
+	}
+
+}

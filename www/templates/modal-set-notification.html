@@ -1,16 +1,16 @@
 <ion-modal-view>
 <ion-header-bar>
 <button class="button icon ion-arrow-left-a" ng-click="closeModalNotification()" />
-<h1 class="title">{{prayname}} Notification</h1>
+<h1 class="title">{{prayname}} {{"notification" | translate}}</h1>
 </ion-header-bar>
 <ion-content>
 <ion-list>
 <div class="item item-divider">
-  On Prayer Time
+  {{"on_prayer_time" | translate}}
 </div>
 <label class="item item-input item-toggle">
   <div class="input-label">
-    Notification
+    {{"notification" | translate}}
   </div>
   <label class="toggle toggle-assertive">
        <input ng-model="notification.onpray" ng-change="notificationChanged(prayname)" type="checkbox">
@@ -21,7 +21,7 @@
 </label>
 <label class="item item-input item-select">
   <div class="input-label">
-    Sound
+    {{"sound" | translate}}
   </div>
   <select ng-model="notification.onpraysound" ng-disabled="!notification.onpray" ng-change="notificationChanged(prayname)">
     <option ng-repeat="sound in sounds"
@@ -32,12 +32,12 @@
 </select>
 </label>
 <div class="item item-divider">
-  Before Prayer Time
+  {{"before_prayer_time" | translate}}
 </div>
 
 <label class="item item-input item-toggle">
   <div class="input-label">
-    Notification
+    {{"notification" | translate}}
   </div>
   <label class="toggle toggle-assertive">
        <input type="checkbox" ng-model="notification.beforepray" ng-change="notificationChanged(prayname)">
@@ -49,7 +49,7 @@
 
 <label class="item item-input item-select">
   <div class="input-label">
-    Notify Before
+    {{"notify_before" | translate}}
   </div>
   <select ng-change="notificationChanged(prayname)" ng-disabled="!notification.beforepray" ng-model="notification.beforepraytime">
     <option ng-repeat="time in timeReminders"
@@ -62,7 +62,7 @@
 
 <label class="item item-input item-select">
   <div class="input-label">
-    Sound
+    {{"sound" | translate}}
   </div>
   <select ng-change="notificationChanged(prayname)" ng-disabled = "!notification.beforepray"  ng-model="notification.beforepraysound">
     <option ng-repeat="sound in sounds"

@@ -8,6 +8,7 @@ angular.module('starter.controllers', [])
   $interval, 
   $ionicModal, 
   $ionicPopup,
+  $translate,
   GeoLocation, 
   Configuration, 
   Lookup,
@@ -45,8 +46,7 @@ angular.module('starter.controllers', [])
           
           $log.debug("new location", prayer.location);
 
-          $log.debug("Saving", prayer);
-          Configuration.setPrayer(prayer);
+          savePrayer(prayer);
 
           
           return false;
@@ -191,8 +191,9 @@ angular.module('starter.controllers', [])
         break;
     }
     $scope.prayer = prayer;
-    Configuration.setPrayer(prayer); 
-    $log.debug("Saving prayer", prayer);
+    savePrayer(prayer);
+
+    $rootScope.$broadcast("calculatePrayerTime");      
   }
 
   $scope.closeModalNotification = function() {
@@ -227,8 +228,7 @@ angular.module('starter.controllers', [])
       prayer.location.latitude = position.coords.latitude;
       prayer.location.longitude = position.coords.longitude;
 
-      $log.debug("Saving", prayer);
-      Configuration.setPrayer(prayer);
+      savePrayer(prayer);
 
       $rootScope.$broadcast("currentPositionChanged");     
       
@@ -242,7 +242,7 @@ angular.module('starter.controllers', [])
   $scope.findLocationByName = function (){
     if (prayer.query.length >= 3) {
       $log.debug("Getting location by name", prayer.query);
-      GeoLocation.getLocationByName(prayer.query).then(function(result){
+      GeoLocation.getLocationByName(prayer.query, prayer.setting.language.toLowerCase()).then(function(result){
         $scope.positions = getLocalyityPosition(result.data.results);                                               
       })
 
@@ -260,7 +260,7 @@ angular.module('starter.controllers', [])
     navigator.geolocation.getCurrentPosition(function (position) {
 
 
-      GeoLocation.getGeoInformation(position.coords.latitude, position.coords.longitude).then(function(result){
+      GeoLocation.getGeoInformation(position.coords.latitude, position.coords.longitude, prayer.setting.language).then(function(result){
         result.data.results.forEach(function(value){ 
           if (value.types.indexOf('locality') != -1) { 
             positions.push(value);
@@ -298,13 +298,14 @@ angular.module('starter.controllers', [])
      });
   }
 
-  getLocationName = function(latitude, longitude) {
+  getLocationName = function(latitude, longitude, lang) {
     
-      GeoLocation.getGeoInformation(latitude, longitude).then(function(result){
+      GeoLocation.getGeoInformation(latitude, longitude, lang).then(function(result){
         setLocalityPosition(result.data.results);
+        $rootScope.$broadcast("calculatePrayerTime");
       }, function(err){
         $log.error(err.message);
-        $rootScope.$broadcast("useDefaultLocation");
+        $rootScope.$broadcast("calculatePrayerTime");
       })
   }
 
@@ -320,14 +321,13 @@ angular.module('starter.controllers', [])
         prayer.location.rawoffset = tz.data.rawOffset;
         prayer.location.timezone = tz.data.rawOffset/60/60;
         
-        $log.debug("Saving");
-        Configuration.setPrayer(prayer);
+        savePrayer(prayer);
 
-        $rootScope.$broadcast("timezoneChanged");        
+        $rootScope.$broadcast("calculatePrayerTime");        
 
       }, function(err){
         $log.error(err.message);
-        $rootScope.$broadcast("useDefaultLocation");
+        $rootScope.$broadcast("calculatePrayerTime");
       })
   }
 
@@ -339,34 +339,29 @@ angular.module('starter.controllers', [])
       prayer.location.latitude = position.coords.latitude;
       prayer.location.longitude = position.coords.longitude;
       
-      $log.debug("Saving", prayer);
-      Configuration.setPrayer(prayer);
+      savePrayer(prayer);
 
       $rootScope.$broadcast("currentPositionChanged");      
     }, function (err) {
       $log.error(err.message);
-      $rootScope.$broadcast("useDefaultLocation");
+      $rootScope.$broadcast("calculatePrayerTime");
       showAlert("Connection Problem","Please connect to Internet for more accurate result");
     });
   }
 
-  $scope.$on('configurationChanged', function(){
-    $log.debug("Configuration has changed");
-    prayer = Configuration.getPrayer();
-    prayer = PrayerTimeService.calculate(prayer);
-    $log.debug("Saving");
+  savePrayer = function(prayer) {
+    $log.debug("save prayer", prayer);
     Configuration.setPrayer(prayer);
-  });
-
-  $scope.$on('timezoneChanged', function(){
+  }
+ 
+  $scope.$on('calculatePrayerTime', function(){
     $log.debug("Timezone has changed");
-
+    prayer = Configuration.getPrayer();
     prayer = PrayerTimeService.calculate(prayer);
     
     updateClock();
 
-    $log.debug("save prayer", prayer);
-    Configuration.setPrayer(prayer);
+    savePrayer(prayer);
     
     stop = $interval(getTimeRemaining, 1000);
     $interval(updateClock, 30000);
@@ -378,35 +373,22 @@ angular.module('starter.controllers', [])
   $scope.$on('currentPositionChanged', function(){
     $log.debug("Current position has changed");
     getTimezone(prayer.location.latitude, prayer.location.longitude, new Date());
-    getLocationName(prayer.location.latitude, prayer.location.longitude);  
+    getLocationName(prayer.location.latitude, prayer.location.longitude, prayer.setting.lang);  
   });
 
-  $scope.$on('useDefaultLocation', function(){
-    $log.debug("Use default location");
-    prayer = PrayerTimeService.calculate(prayer);
-
-    $interval(updateClock, 30000);
-    stop = $interval(getTimeRemaining, 1000);
-    prayer.locationsolved = true;
-
-    $log.debug("save prayer", prayer);
-    Configuration.setPrayer(prayer);
-    
-    $scope.prayer = prayer;
-  });
+ 
 
 
   //MAIN
   var prayer = Configuration.getPrayer();
-  //var prayerUtil = new PrayerUtil(prayer);
   var newposition = {};
   var query = "";
   $log.debug("initializing prayer", prayer);
 
   prayer.locationsolved = false;
 
-  //$log.debug("from service ", PrayerTimeService.calculate(prayer));
-
+  $translate.use(prayer.setting.language);
+  $log.debug("language", $translate.use(prayer.setting.language));  
   updateClock();
   getCurrentPosition();
   
@@ -418,7 +400,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, $rootScope, $log, Configuration, Lookup) {
+.controller('SettingsCtrl', function($scope, $rootScope, $log, $translate, Configuration, Lookup) {
   
   var prayer = Configuration.getPrayer();
 
@@ -427,15 +409,19 @@ angular.module('starter.controllers', [])
     prayer.setting = $scope.settings;
     $log.debug("Saving prayer", prayer);
     Configuration.setPrayer(prayer);
-    $rootScope.$broadcast('configurationChanged');
+    $rootScope.$broadcast('calculatePrayerTime');
   }
 
   $scope.changedLanguage = function() {
     prayer = Configuration.getPrayer();
     prayer.setting = $scope.settings;
+
+    $translate.use(prayer.setting.language);
+
     $log.debug("Saving prayer", prayer);
     Configuration.setPrayer(prayer);
     $rootScope.$broadcast('languageChanged'); 
+    $rootScope.$broadcast('calculatePrayerTime');
   }
 
   $scope.settings = prayer.setting;
