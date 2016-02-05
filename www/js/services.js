@@ -43,6 +43,18 @@ angular.module('starter.services', [])
     return q.promise;
   }
 
+  self.getGeoInformationByPlaceId = function(placeid, lang) {
+    var q = $q.defer();
+    $http.get(GOOGLE_API+'place_id='+placeid+'&language='+lang+'&sensor=true&key='+API_KEY).then(function(result){
+      $log.debug("GeoLocation.getGeoInformation by placeid:", result);
+      q.resolve(result);
+    }, function(err) {
+      $log.error("GeoLocation.getGeoInformation by placeid:", err);  
+      q.reject(err);
+    }); 
+    return q.promise;
+  }
+
   self.getLocationByName = function(address, lang) {
    var q = $q.defer();
     $http.get(GOOGLE_API+'address='+address+'&language='+lang).then(function(result){
@@ -209,7 +221,7 @@ angular.module('starter.services', [])
   }
 })
 
-.factory("PrayerTimeService", function($log, Lookup){
+.factory("PrayerTimeService", function($log, $cordovaLocalNotification, Lookup){
 
   var prayer;
 
@@ -254,7 +266,7 @@ angular.module('starter.services', [])
         dateTo = Date.parse(dateToDate);
         
 
-        if (curtime > dateFrom && curtime < dateTo) {
+        if (curtime >= dateFrom && curtime <= dateTo) {
           prayer.prayinfo.currentpray = praynames[i];
           prayer.prayinfo.currentpraytime = times[i];  
           prayer.prayinfo.nextpray = praynames[i+1];
@@ -272,7 +284,7 @@ angular.module('starter.services', [])
         dateFrom = Date.parse(dateFromDate);
         dateTo = Date.parse(dateToDate);
        
-        if (curtime > dateFrom && curtime < dateTo) {
+        if (curtime >= dateFrom && curtime <= dateTo) {
           prayer.prayinfo.currentpray = praynames[i];
           prayer.prayinfo.currentpraytime = times[i];     
           prayer.prayinfo.nextpray = praynames[0];
@@ -308,6 +320,101 @@ angular.module('starter.services', [])
       prayer.dateinfo.hijridate = hijriCal.Hday+" "+hijrimonths[hijrimonth]+" "+hijriCal.Hyear;
       
       $log.debug("Date info result", prayer.dateinfo);      
+  }
+
+  var sendNotification = function(prayer) {
+    var praytime = prayer.praytime;
+    var alarmTime;
+    var title = "Prayer Time";
+    var message;
+
+    if (praytime.imsak.notification.onpray) {
+      cancelNotification(praytime.imsak.id);
+      alarmTime = new Date(dateutil.format(prayer.today,'Y-m-d')+" "+praytime.imsak.time);  
+      if (Date.parse(alarmTime) > Date.parse(prayer.today)) {
+        $log.debug("> setting notification for imsak at ", [alarmTime, prayer.today]);  
+        message = "It is time to Imsak";
+        addNotification(praytime.imsak.id, alarmTime, title, message);
+      }
+    }
+
+    if (praytime.fajr.notification.onpray) {
+      cancelNotification(praytime.fajr.id);
+      alarmTime = new Date(dateutil.format(prayer.today,'Y-m-d')+" "+praytime.fajr.time);  
+      if (Date.parse(alarmTime) > Date.parse(prayer.today) && !prayer.setting.disablenotification) {
+        $log.debug("> setting notification for fajr at ", [alarmTime, prayer.today]);
+        message = "It is time to pray Fajr";
+        addNotification(praytime.fajr.id, alarmTime, title, message);
+      }
+    }
+
+    if (praytime.dhuhr.notification.onpray) {
+      cancelNotification(praytime.dhuhr.id);
+      alarmTime = new Date(dateutil.format(prayer.today,'Y-m-d')+" "+praytime.dhuhr.time);  
+      if (Date.parse(alarmTime) > Date.parse(prayer.today) && !prayer.setting.disablenotification) {
+        $log.debug("> setting notification for dhuhr at ", [alarmTime, prayer.today]); 
+        message = "It is time to pray Dhuhr";
+        addNotification(praytime.dhuhr.id, alarmTime, title, message);
+      }
+    }
+
+    if (praytime.asr.notification.onpray) {
+      cancelNotification(praytime.asr.id);
+      alarmTime = new Date(dateutil.format(prayer.today,'Y-m-d')+" "+praytime.asr.time);  
+      if (Date.parse(alarmTime) > Date.parse(prayer.today) && !prayer.setting.disablenotification) {
+        $log.debug("> setting notification for asr at ", [alarmTime, prayer.today]);  
+        message = "It is time to pray Asr";
+        addNotification(praytime.asr.id, alarmTime, title, message);
+      }
+    }
+
+    if (praytime.maghrib.notification.onpray) {
+      cancelNotification(praytime.maghrib.id);
+      alarmTime = new Date(dateutil.format(prayer.today,'Y-m-d')+" "+praytime.maghrib.time);  
+      if (Date.parse(alarmTime) > Date.parse(prayer.today) && !prayer.setting.disablenotification) {
+        $log.debug("> setting notification for maghrib at ", [alarmTime, prayer.today]);  
+        message = "It is time to pray Maghrib";
+        addNotification(praytime.maghrib.id, alarmTime, title, message);
+      }
+    }
+
+    if (praytime.isha.notification.onpray) {
+      cancelNotification(praytime.isha.id);
+      alarmTime = new Date(dateutil.format(prayer.today,'Y-m-d')+" "+praytime.isha.time);  
+      if (Date.parse(alarmTime) > Date.parse(prayer.today) && !prayer.setting.disablenotification) {
+        $log.debug("> setting notification for isha at ", [alarmTime, prayer.today]);  
+        message = "It is time to pray Isha";
+        addNotification(praytime.isha.id, alarmTime, title, message);
+      }
+    }
+
+  }
+
+  var cancelNotification = function(id) {
+    try {
+      $cordovaLocalNotification.cancel(id);  
+    } catch (err) {
+      $log.warn("Unable to cancel notification");
+    }
+    
+  }
+
+  var addNotification = function(id, alarmTime, title, message) {
+    try {
+      $cordovaLocalNotification.schedule({
+            id: id,
+            date: alarmTime,
+            message: message,
+            title: title,
+            autoCancel: true,
+            sound: "file://sound/azan1.mp3"
+      }).then(function () {
+          console.log("The notification has been set");
+      });  
+    } catch (err) {
+      $log.warn("Unable to send notification");
+    }
+    
   }
 
   var calculate= function(prayer) {
@@ -351,6 +458,7 @@ angular.module('starter.services', [])
 
       getCurrentPrayTime(prayer);
       hijridate(prayer);
+      sendNotification(prayer);
 
       return prayer;
   }

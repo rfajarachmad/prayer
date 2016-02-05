@@ -58,8 +58,7 @@ angular.module('starter.controllers', [])
   //Get geo information
 
   showItIsTimeToPray = function() {
-    prayer = Configuration.getPrayer();
-    PrayerTimeService.calculate(prayer)
+    $rootScope.$broadcast("calculatePrayerTime"); 
   }
 
   getTimeRemaining = function() {
@@ -223,14 +222,16 @@ angular.module('starter.controllers', [])
         }
       }
 
+
       prayer = Configuration.getPrayer();
 
       prayer.location.latitude = position.coords.latitude;
       prayer.location.longitude = position.coords.longitude;
+      prayer.location.placeid = $scope.prayer.newposition.place_id;
 
       savePrayer(prayer);
 
-      $rootScope.$broadcast("currentPositionChanged");     
+      $rootScope.$broadcast("currentPositionChangedByPlaceId");     
       
       $scope.positions = [];
       $scope.prayer.query = "";  
@@ -240,9 +241,10 @@ angular.module('starter.controllers', [])
   }
 
   $scope.findLocationByName = function (){
-    if (prayer.query.length >= 3) {
+    $log.debug("Query", $scope.prayer.query);
+    if ($scope.prayer.query.length >= 3) {
       $log.debug("Getting location by name", prayer.query);
-      GeoLocation.getLocationByName(prayer.query, prayer.setting.language.toLowerCase()).then(function(result){
+      GeoLocation.getLocationByName($scope.prayer.query, prayer.setting.language.toLowerCase()).then(function(result){
         $scope.positions = getLocalyityPosition(result.data.results);                                               
       })
 
@@ -373,10 +375,19 @@ angular.module('starter.controllers', [])
   $scope.$on('currentPositionChanged', function(){
     $log.debug("Current position has changed");
     getTimezone(prayer.location.latitude, prayer.location.longitude, new Date());
-    getLocationName(prayer.location.latitude, prayer.location.longitude, prayer.setting.lang);  
+    getLocationName(prayer.location.latitude, prayer.location.longitude, prayer.setting.language);  
   });
 
- 
+  $scope.$on('currentPositionChangedByPlaceId', function(){
+    $log.debug("Current position has changed");
+    getTimezone(prayer.location.latitude, prayer.location.longitude, new Date());
+    GeoLocation.getGeoInformationByPlaceId(prayer.location.placeid, prayer.setting.language).then(function(result){
+        setLocalityPosition(result.data.results);
+      }, function(err){
+        $log.error(err.message);
+      })  
+  });
+   
 
 
   //MAIN
@@ -401,70 +412,94 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, $rootScope, $log, $translate, $ionicPopup, Configuration, Lookup) {
+.controller('SettingsCtrl', function($scope, 
+  $translate, 
+  $ionicModal, 
+  $rootScope, 
+  $log, 
+  $translate, 
+  $cordovaLocalNotification,
+  Configuration, 
+  Lookup) {
   
   var prayer = Configuration.getPrayer();
-  var selectedItem = undefined;
+  var selecteditem = {
+    key: "",
+    value: ""
+  };
+
+  $ionicModal.fromTemplateUrl('templates/modal-list-settings.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modalsettings = modal;
+  });
+
+  $scope.closePopupList = function() {
+    $log.debug("selecteditem", [$scope.selecteditem.key, $scope.selecteditem.value]);
+
+    prayer = Configuration.getPrayer();
+
+    switch ($scope.selecteditem.key) {
+    case 'LANG' :
+      prayer.setting.language = $scope.selecteditem.value;
+      break;
+
+    case 'CM' :
+      prayer.setting.method = $scope.selecteditem.value;
+      break;
+
+    case 'AC' :
+      prayer.setting.asrmethod = $scope.selecteditem.value;
+      break;
+    }
+
+    $log.debug("Saving prayer", prayer);
+    Configuration.setPrayer(prayer);
+    $translate.use(prayer.setting.language);
+    $rootScope.$broadcast('calculatePrayerTime');
+    $scope.modalsettings.hide();
+  }
 
   $scope.showList = function(mode){
    var items = [];
    var model = "";
    var title = "";
+   
+   selecteditem.key = mode;
 
    switch (mode) {
     case 'LANG' :
       items = Lookup.getLanguages();
-      model = "settings.language";
-      title = "Choose a language :";
+      selecteditem.value = prayer.setting.language;
+      title = "choose_language";
       break;
 
     case 'CM' :
       items = Lookup.getMethods();
-      model = "settings.method";
-      title = "Choose calculation method :";
+      selecteditem.value = prayer.setting.method;
+      title = "choose_calculation_method";
       break;
 
     case 'AC' :
       items = Lookup.getAsrMethods();
-      model = "settings.asrmethod";
-      title = "Choose Asr method :";
+      selecteditem.value = prayer.setting.asrmethod;
+      title = "choose_asr_method";
       break;
    }
-   
+
    $scope.items = items;
-   showListPopup(title, model);
+   $scope.selecteditem = selecteditem;
+   $scope.title = title;
+   $scope.modalsettings.show();
  } 
 
- showListPopup = function(title, model) {
-  var listPopup = $ionicPopup.show({
-     template: '<ion-list class="item-text-wrap"> <ion-radio class ng-repeat="item in items" ng-model="'+model+'" ng-value="item.code">{{item.description}} </ion-radio> </ion-list>',
-     title: title,
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       { text: '<b>Ok</b>',
-         type: 'button-balanced',
-         onTap: function(e) {
-            $log.debug("selectedItem",$scope.settings);
-            changedSettings();
-            return $scope.settings;
-         }
-        }
-     ]
-   });
- }
-
-
-  changedSettings = function() {
-    prayer = Configuration.getPrayer();
-    prayer.setting = $scope.settings;
-
-    $translate.use(prayer.setting.language);
-
-    $log.debug("Saving prayer", prayer);
-    Configuration.setPrayer(prayer);
-    $rootScope.$broadcast('languageChanged'); 
-    $rootScope.$broadcast('calculatePrayerTime');
+  $scope.settingChanged = function() {
+      prayer = Configuration.getPrayer();
+      prayer.setting = $scope.settings;
+      $log.debug("Saving prayer", prayer);
+      Configuration.setPrayer(prayer);
+      $rootScope.$broadcast('calculatePrayerTime');
   }
 
   $scope.settings = prayer.setting;

@@ -18,6 +18,10 @@ var translations = {
 		"notify_before": "Notify before",
 		"on_prayer_time": "On prayer time",
 		"before_prayer_time": "Before prayer time",
+		"choose_language": "Choose a languge",
+		"choose_calculation_method": "Choose calculation method",
+		"choose_asr_method": "Choose Asr Method",
+		"turn_off_notification":"Disable notification",
 		"praynames": ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"],
 		"hijrimonths": ["Muharam", 'Safar', 'Rabi Al-Awwal', 'Rabi Al-Thani', 'Jumada Al-Awwal', 'Jumada Al-Thani', 'Rajab', 'Shaban', 'Ramadhan', 'Shawwal', 'Dhul Qaidah', 'Dhul Hijjah'],
 		"masehimonths": {'January': 'January', 'February' : 'February', 'March': 'March', 'April': 'April', 'May' : 'May', 'June' : 'June', 'July' : 'July', 'August' : 'August', 'September' : 'September', 'October' :'October', 'November':'November', 'December':'December','Sunday': 'Sunday', 'Monday' : 'Monday', 'Tuesday' : 'Tuesday', 'Wednesday': 'Wednesday', 'Thursday': 'Thursday', 'Friday': 'Friday', 'Saturday':'Saturday'}
@@ -42,6 +46,10 @@ var translations = {
 		"notify_before": "Ingatkan sebelum",
 		"on_prayer_time": "Saat waktu shalat",
 		"before_prayer_time": "Sebelum waktu shalat",
+		"choose_language": "Pilih bahasa",
+		"choose_calculation_method": "Pilih metode perhitungan",
+		"choose_asr_method": "Pilih metode perhitungan Ashar",
+		"turn_off_notification": "Matikan notifikasi",
 		"praynames": ["Subuh", "Duhur", "Asar", "Maghrib", "Isya"],
 		"hijrimonths": ["Muharram", 'Safar', 'Rabiul Awal', 'Rabiul Akhir', 'Jumadil Awal', 'Jumadil Akhir', 'Rajab', 'Syaban', 'Ramadhan', 'Syawal', 'Dzulkaidah', 'Dzulhijjah'],
 		"masehimonths": {'January': 'Januari', 'February' : 'Februari', 'March': 'Maret', 'April': 'April', 'May' : 'Mei', 'June' : 'Juni', 'July' : 'Juli', 'August' : 'Agustus', 'September' : 'September', 'October' :'Oktober', 'November':'Nopember', 'December':'Desember','Sunday': 'Minggu', 'Monday' : 'Senin', 'Tuesday' : 'Selasa', 'Wednesday': 'Rabu', 'Thursday': 'Kamis', 'Friday': 'Jumat', 'Saturday':'Sabtu'}

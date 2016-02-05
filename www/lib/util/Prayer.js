@@ -7,6 +7,7 @@ function Prayer() {
     this.locationsolved = true;
   	this.query = "";
     this.location = {
+      placeid: "ChIJs7AiJOzxaS4RAk1AR_7QoDk",
       latitude: -6.2087634,
       longitude: 106.84559899999999,
       district: "South Jakarta",
@@ -23,6 +24,7 @@ function Prayer() {
     };
     this.praytime = {
       imsak: {
+        id: 1,
         name:"Imsak", 
         time:"",
         notification: {
@@ -34,6 +36,7 @@ function Prayer() {
         }
       },
       fajr: {
+        id: 2,
         name:"Fajr", 
         time:"",
         notification: {
@@ -45,6 +48,7 @@ function Prayer() {
         }
       },
       dhuhr: {
+        id: 2,
         name:"Dhuhr", 
         time:"",
         notification: {
@@ -56,6 +60,7 @@ function Prayer() {
         }
       },
       asr: {
+        id: 3,
         name:"Asr", 
         time:"",
         notification: {
@@ -67,6 +72,7 @@ function Prayer() {
         }
       },
       maghrib: {
+        id: 4,
         name:"Maghrib", 
         time:"",
         notification: {
@@ -78,6 +84,7 @@ function Prayer() {
         }
       },
       isha: {
+        id: 5,
         name:"Isha", 
         time:"",
         notification: {
@@ -100,6 +107,7 @@ function Prayer() {
     	method:"MWL",
     	asrmethod:"Standard",
       language:"EN",
+      disablenotification: false,
       adjustment: {
         fajr: 0,
         dhuhr: 0,

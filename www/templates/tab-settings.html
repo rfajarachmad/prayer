@@ -14,7 +14,20 @@
 	<a class="item item-icon-left" href="#" ng-click="showList('LANG')">
     	<i class="icon ion-android-globe"></i>
 	    {{"settings_language" | translate}}
-  	</a>
+  </a>
+
+  <label class="item item-icon-left item-toggle">
+    <i class="icon ion-android-volume-off"></i>
+    <div class="input-label">
+      {{"turn_off_notification" | translate}}
+    </div>
+    <label class="toggle toggle-balanced">
+         <input ng-model="settings.disablenotification" ng-change="settingChanged()" type="checkbox">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+       </label>
+  </label>
 
   	<div class="item item-divider">
 		{{"settings_calculation_setting" | translate}}
@@ -33,8 +46,7 @@
   	<a class="item item-icon-left" href="#/tab/settings/adjustment">
     	<i class="icon ion-wand"></i>
 		{{"settings_manual_adjustment" | translate}}
-  	</a>
-
+  	</a>  
 </div>
 </ion-content>
 </ion-view>

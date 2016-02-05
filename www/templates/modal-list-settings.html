@@ -1,0 +1,12 @@
+<ion-modal-view>
+<ion-header-bar>
+<button class="button icon ion-arrow-left-a" ng-click="closePopupList()" />
+<p class="title item-text-wrap">{{ title | translate }}</p>
+</ion-header-bar>
+<ion-content scroll="true">
+<ion-list class="item-text-wrap"> 
+<ion-radio class ng-repeat="item in items" ng-model="selecteditem.value" ng-value="item.code">{{item.description}} </ion-radio> 
+</ion-list>
+
+</ion-content>
+</ion-modal-view>

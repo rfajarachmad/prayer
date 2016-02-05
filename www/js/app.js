@@ -32,7 +32,7 @@ angular.module('starter', ['ionic','ngCordova', 'pascalprecht.translate', 'start
   // Each state's controller can be found in controllers.js
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.backButton.previousTitleText(false);
-  $logProvider.debugEnabled(false);
+  $logProvider.debugEnabled(true);
   
   for(lang in translations){
     $translateProvider.translations(lang, translations[lang]);
